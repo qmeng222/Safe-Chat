@@ -134,9 +134,9 @@ uvicorn chats:my_app --reload
    Heroku app name > Settings > Config Vars > Reveal Config Vars > Add
    - CORS_HOST (as key): "https://USERNAME.gitlab.io" (as value)
 7. Set GitLab CI/CD Variables (Settings > CI/CD > Variables > Expand > Add variables, one by one):
-   1. HEROKU_API_KEY: value from step #2 above. This must be "masked" and "protected".
-   2. HEROKU_FASTAPI_APP: HEROKU_APP_NAME
-   3. REACT_APP_API_HOST: "https://APP-NAME.herokuapp.com"
+   - HEROKU_API_KEY: value from step #2 above. This must be "masked" and "protected".
+   - HEROKU_FASTAPI_APP: HEROKU_APP_NAME
+   - REACT_APP_API_HOST: "https://HEROKU_APP-NAME.herokuapp.com"
 
-7) Push to main, go watch the CI/CD pipeline in gitlab
-8) When that succeeds, go see if your site is up: Settings > Pages > click the link
+8) Push to main, go watch the CI/CD pipeline in gitlab
+9) When that succeeds, go see if your site is up: Settings > Pages > click the link
