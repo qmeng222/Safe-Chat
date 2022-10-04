@@ -1,17 +1,15 @@
-# stages:
-#   - test
-#   - build
-#   - deploy
-
+stages:
+  - test
+  - build
+  - deploy
 
 ## BUILD
 build-front-end-job:
   stage: build
   image: node:lts-bullseye
   variables:
-    # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
-    PUBLIC_URL: https://sjp19-public-resources.gitlab.io/project_templates/module3-project-gamma
-    REACT_APP_API_HOST: https://apis-with-sql.herokuapp.com
+    PUBLIC_URL: https://qmeng222.gitlab.io/safe-chat
+    REACT_APP_API_HOST: https://my-safe-chat.herokuapp.com
   script:
     - cd ghi
     - npm install
@@ -21,7 +19,7 @@ build-front-end-job:
     paths:
       - ghi/build/
 
-build-fastapi-api-image-job:  # RENAME THIS
+build-fastapi-api-image-job: # RENAME THIS
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
@@ -36,7 +34,7 @@ build-fastapi-api-image-job:  # RENAME THIS
     - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
     - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:latest
 
-deploy-fastapi-api-image-job:  # RENAME THIS
+deploy-fastapi-api-image-job: # RENAME THIS
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: deploy
@@ -52,7 +50,7 @@ deploy-fastapi-api-image-job:  # RENAME THIS
     - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
 
-release-fastapi-api-image-job:  # RENAME THIS
+release-fastapi-api-image-job: # RENAME THIS
   stage: deploy
   image: node:10.17-alpine
   needs:
@@ -65,10 +63,8 @@ release-fastapi-api-image-job:  # RENAME THIS
   script:
     - heroku container:release web --app $HEROKU_FASTAPI_APP
 
-
-
 ## DEPLOY THE UI
-pages:  # THIS STEP MUST BE NAME PAGES
+pages: # THIS STEP MUST BE NAME PAGES
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -77,9 +73,9 @@ pages:  # THIS STEP MUST BE NAME PAGES
   needs:
     - build-front-end-job
   script:
-     # THE FIRST PART OF THIS COMMAND MUST BE THE DIRECTORY
-     # THAT YOU cd INTO TO BUILD IT PLUS THE build/ AT THE
-     # END
+    # THE FIRST PART OF THIS COMMAND MUST BE THE DIRECTORY
+    # THAT YOU cd INTO TO BUILD IT PLUS THE build/ AT THE
+    # END
     - mv ghi/build/ public
   artifacts:
     paths:
